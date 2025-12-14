@@ -1,156 +1,376 @@
-# My Modern React Setup
+# Thornton Pickard Camera Catalog - Frontend
 
-⚡️ Vite + React 19 + TypeScript
+React 19 frontend application for browsing and managing the Thornton Pickard camera and ephemera collection. Part of the full-stack Thornton Pickard application.
 
-## Features
+## 🎯 About
 
-- ⚡️ Vite for fast builds and HMR
-- ⚛️ React 19 with TypeScript
-- 🔄 Tanstack Query for data fetching
-- 💅 Sass Modules + Tailwind CSS
-- 🛡️ Error Boundaries for production error handling
-- 🔍 Dev error overlay for development
-- ✨ Prettier for code formatting
-- 🐳 Docker support (Production Nginx + Development container)
+This is the user interface for the Thornton Pickard camera catalog, providing an intuitive way to:
 
-## Getting Started
+- Browse and search historical camera models
+- View detailed camera specifications and images
+- Filter cameras by manufacturer, year, and format
+- Manage user accounts and authentication
+- Upload and manage camera images
+
+## 🔗 Related Repositories
+
+This frontend works with:
+
+- **[thornton-pickard-api](https://github.com/Candoo/thornton-pickard-api)** - Backend API
+- **[Pickard-Index](https://github.com/Candoo/Pickard-Index)** - Full-stack deployment setup
+
+**⚡ Quick Start:** For the easiest setup of the entire application, use the [Pickard-Index deployment repository](https://github.com/Candoo/Pickard-Index).
+
+## ✨ Features
+
+- ⚡️ **Vite** for fast builds and hot module replacement
+- ⚛️ **React 19** with TypeScript for type safety
+- 🔄 **Tanstack Query** for efficient data fetching and caching
+- 🎨 **Tailwind CSS** for modern, responsive styling
+- 🛡️ **Error Boundaries** for graceful error handling
+- 🔍 **Development error overlay** for debugging
+- 💅 **Prettier** for consistent code formatting
+- 🐳 **Docker support** with nginx for production deployment
+- 🔐 **JWT Authentication** integration
+- 📱 **Responsive design** for mobile and desktop
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and npm
+- The backend API running (see [thornton-pickard-api](https://github.com/Candoo/thornton-pickard-api))
 
 ### Local Development
-```bash
-# Install dependencies
-npm install
 
-# Start dev server
-npm run dev
-```
+1. **Clone the repository:**
 
-Visit `http://localhost:5173`
+   ```bash
+   git clone https://github.com/Candoo/my-modern-react-setup.git
+   cd my-modern-react-setup
+   ```
 
-## Docker Deployment
+2. **Install dependencies:**
 
-This repository includes two Docker configurations: one for production (Nginx) and one for development (Vite).
+   ```bash
+   npm install
+   ```
 
-### 1. Production Build (Nginx)
+3. **Configure environment variables:**
 
-Uses `Dockerfile`. Builds the static assets and serves them via Nginx on port 80.
+   Create a `.env` file in the root directory:
+
+   ```env
+   # Backend API URL
+   VITE_API_URL=http://localhost:8080
+   
+   # Optional: Enable debug mode
+   VITE_DEBUG=true
+   ```
+
+4. **Start the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+5. **Access the application:**
+
+   Visit `http://localhost:5173` in your browser.
+
+### Development with Backend
+
+To run the frontend with the full backend stack:
+
+1. Start the backend API (see [thornton-pickard-api README](https://github.com/Candoo/thornton-pickard-api))
+2. Ensure `VITE_API_URL` in your `.env` points to the API (default: `http://localhost:8080`)
+3. Start the frontend development server
+
+The frontend will proxy API requests to the backend automatically.
+
+## 🐳 Docker Deployment
+
+### Building the Docker Image
+
 ```bash
 # Build the production image
-docker build -f Dockerfile -t my-react-app-prod .
+docker build -t thornton-pickard-frontend .
 
-# Run the container (Map host port 8080 to container port 80)
-docker run -d -p 8080:80 --name my-react-app-prod my-react-app-prod
+# Run the container
+docker run -d -p 3000:80 --name pickard-frontend \
+  -e VITE_API_URL=http://localhost:8080 \
+  thornton-pickard-frontend
 ```
 
-Visit `http://localhost:8080`
+Visit `http://localhost:3000`
 
-### 2. Development Build (Hot Reloading)
+### Using Docker Compose
 
-Uses `Dockerfile.dev`. Installs dependencies and runs the Vite dev server on port 5173.
+For the complete application stack, use the [Pickard-Index deployment repository](https://github.com/Candoo/Pickard-Index):
+
 ```bash
-# Build the dev image
-docker build -f Dockerfile.dev -t my-react-app-dev .
+# Clone the deployment repo
+git clone https://github.com/Candoo/Pickard-Index.git
 
-# Run the container (Map host port 5173 to container port 5173)
-# Note: For HMR to work, this requires volume mounting (see Docker Compose below)
-docker run -d -p 5173:5173 --name my-react-app-dev my-react-app-dev
+# Follow the setup instructions in Pickard-Index/README.md
 ```
 
-### Using Docker Compose (Orchestration)
+## 📜 Available Scripts
 
-**Note:** This repository does not contain a `docker-compose.yml` file. It is designed to be orchestrated by the parent repository (`Pickard-Index`).
-
-If you are running this as part of the full stack:
-
-1. Navigate to the `Pickard-Index` root directory.
-
-2. **Production Mode:**
-```bash
-docker compose up -d --build
-```
-
-3. **Development Mode:**
-```bash
-docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
-```
-
-## Scripts
-
-- `npm run dev` - Start development server
+- `npm run dev` - Start development server (with hot reload)
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build locally
 - `npm run format` - Format code with Prettier
-- `npm run format:check` - Check code formatting
+- `npm run format:check` - Check code formatting without changes
+- `npm run lint` - Run ESLint (if configured)
 
-## Docker Commands (General)
-```bash
-# Stop container
-docker stop my-react-app-prod
+## 🏗️ Project Structure
 
-# Start container
-docker start my-react-app-prod
-
-# Remove container
-docker rm my-react-app-prod
-
-# View logs
-docker logs my-react-app-prod
-
-# Access container shell
-docker exec -it my-react-app-prod sh
 ```
-
-## Project Structure
-```
-.
+my-modern-react-setup/
 ├── src/
-│   ├── components/
-│   │   └── ErrorBoundary.tsx
-│   ├── App.tsx
-│   ├── App.module.scss
-│   ├── main.tsx
-│   └── index.scss
-├── public/
-├── Dockerfile              # Production configuration
-├── Dockerfile.dev          # Development configuration
-├── nginx.conf
+│   ├── components/          # Reusable React components
+│   │   ├── ErrorBoundary.tsx
+│   │   ├── CameraCard.tsx
+│   │   ├── SearchBar.tsx
+│   │   └── ...
+│   ├── pages/              # Page components
+│   │   ├── Home.tsx
+│   │   ├── CameraDetail.tsx
+│   │   └── Login.tsx
+│   ├── hooks/              # Custom React hooks
+│   │   ├── useAuth.ts
+│   │   └── useCameras.ts
+│   ├── services/           # API service layer
+│   │   ├── api.ts
+│   │   ├── auth.ts
+│   │   └── cameras.ts
+│   ├── types/              # TypeScript type definitions
+│   │   ├── camera.ts
+│   │   └── user.ts
+│   ├── utils/              # Utility functions
+│   ├── App.tsx             # Main App component
+│   ├── main.tsx            # Application entry point
+│   └── index.css           # Global styles
+├── public/                 # Static assets
+├── Dockerfile              # Production Docker image
+├── Dockerfile.dev          # Development Docker image
+├── docker-compose.yml      # Local Docker Compose (optional)
+├── nginx.conf              # Nginx configuration for production
 ├── .dockerignore
 ├── .gitignore
-├── .prettierrc
-├── eslint.config.js
-├── tailwind.config.js
+├── .prettierrc             # Prettier configuration
+├── eslint.config.js        # ESLint configuration
 ├── package.json
-├── tsconfig.json
-├── tsconfig.app.json
-├── tsconfig.node.json
-├── vite.config.ts
-└── index.html
+├── tailwind.config.js      # Tailwind CSS configuration
+├── tsconfig.json           # TypeScript configuration
+├── vite.config.ts          # Vite configuration
+└── README.md
 ```
 
-## Error Handling
+## 🔌 API Integration
 
-### Development
+The frontend communicates with the backend API using Tanstack Query for efficient data management.
 
-- Syntax/compile errors show Vite's dev overlay
-- Runtime render errors caught by Error Boundary
-- Test error handling with the "Trigger Render Error" button
+### Environment Variables
 
-### Production
+- `VITE_API_URL` - Backend API base URL (default: `http://localhost:8080`)
 
-- Error Boundary displays user-friendly error UI
+### Example API Usage
+
+```typescript
+// src/services/cameras.ts
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
+
+export const getCameras = async (params) => {
+  const response = await api.get('/api/v1/cameras', { params });
+  return response.data;
+};
+```
+
+### Authentication
+
+The app uses JWT tokens stored in localStorage:
+
+```typescript
+// Token is automatically included in requests
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+```
+
+## 🎨 Styling
+
+This project uses **Tailwind CSS** for styling:
+
+- Utility-first CSS framework
+- Responsive design out of the box
+- Custom configuration in `tailwind.config.js`
+- Global styles in `src/index.css`
+
+### Customizing Theme
+
+Edit `tailwind.config.js` to customize colors, spacing, fonts, etc.:
+
+```javascript
+export default {
+  theme: {
+    extend: {
+      colors: {
+        'pickard-blue': '#1e40af',
+        'pickard-gold': '#f59e0b',
+      },
+    },
+  },
+};
+```
+
+## 🛡️ Error Handling
+
+### Development Mode
+
+- Vite's dev overlay shows syntax and compile errors
+- Runtime render errors are caught by Error Boundary
+- Test with the "Trigger Render Error" button (if available)
+
+### Production Mode
+
+- Error Boundary displays user-friendly error messages
 - Prevents full application crashes
-- Test with: `npm run build && npm run preview`
+- Errors are logged to console for debugging
 
-## Technology Stack
+Test production error handling:
+
+```bash
+npm run build
+npm run preview
+```
+
+## 🧪 Testing
+
+```bash
+# Run tests (if configured)
+npm test
+
+# Run with coverage
+npm run test:coverage
+
+# Run in watch mode
+npm run test:watch
+```
+
+## 🚢 Deployment
+
+### Production Build
+
+```bash
+npm run build
+```
+
+The optimized production build will be in the `dist/` directory.
+
+### Deployment Options
+
+This application can be deployed to:
+
+- **Static Hosting:** Vercel, Netlify, GitHub Pages
+- **Docker:** AWS ECS, Google Cloud Run, Azure Container Instances
+- **Traditional:** Any web server with nginx/Apache
+- **CDN:** Cloudflare Pages, AWS CloudFront
+
+### Environment Variables for Production
+
+Set these in your deployment platform:
+
+```env
+VITE_API_URL=https://api.yourdomain.com
+```
+
+**Note:** Vite only includes environment variables prefixed with `VITE_` in the build.
+
+## 🔐 Security Considerations
+
+- Never commit `.env` files with secrets
+- API tokens are stored in localStorage (consider httpOnly cookies for production)
+- Implement HTTPS in production
+- Configure CORS properly on the backend
+- Validate and sanitize all user inputs
+- Keep dependencies updated
+
+## 🐛 Troubleshooting
+
+### Port Already in Use
+
+```bash
+# Change port in vite.config.ts or use:
+npm run dev -- --port 3001
+```
+
+### API Connection Errors
+
+1. Verify backend API is running: `curl http://localhost:8080/health`
+2. Check `VITE_API_URL` in `.env`
+3. Ensure CORS is configured on backend
+4. Check browser console for specific errors
+
+### Build Failures
+
+```bash
+# Clear node_modules and reinstall
+rm -rf node_modules package-lock.json
+npm install
+
+# Clear Vite cache
+rm -rf node_modules/.vite
+```
+
+## 📦 Technology Stack
 
 - **Frontend Framework:** React 19
-- **Build Tool:** Vite
-- **Language:** TypeScript
-- **Data Fetching:** Tanstack Query
-- **Styling:** Sass Modules + Tailwind CSS
+- **Build Tool:** Vite 5
+- **Language:** TypeScript 5
+- **Data Fetching:** Tanstack Query (React Query)
+- **Styling:** Tailwind CSS
+- **HTTP Client:** Axios
 - **Code Formatting:** Prettier
-- **Web Server:** Nginx (production)
-- **Container:** Docker
+- **Linting:** ESLint
+- **Web Server (Production):** Nginx
+- **Containerization:** Docker
 
-## License
+### Code Style
 
-MIT
+- Follow TypeScript best practices
+- Use functional components and hooks
+- Format code with Prettier before committing
+- Write meaningful commit messages
+
+## 📄 License
+
+MIT License - see LICENSE file for details.
+
+## 🆘 Support
+
+- **Issues:** [GitHub Issues](https://github.com/Candoo/my-modern-react-setup/issues)
+- **Backend API Issues:** [thornton-pickard-api Issues](https://github.com/Candoo/thornton-pickard-api/issues)
+- **Deployment Issues:** [Pickard-Index Issues](https://github.com/Candoo/Pickard-Index/issues)
+
+## 🔗 Related Links
+
+- [Backend API Repository](https://github.com/Candoo/thornton-pickard-api)
+- [Deployment Repository](https://github.com/Candoo/Pickard-Index)
+- [React Documentation](https://react.dev/)
+- [Vite Documentation](https://vitejs.dev/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/)
+- [Tanstack Query Documentation](https://tanstack.com/query)
+
+---
+
+**Built with React ⚛️ for the Thornton Pickard camera community**
