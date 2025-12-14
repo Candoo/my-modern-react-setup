@@ -106,7 +106,7 @@ Visit `http://localhost:3000`
 
 ### Using Docker Compose
 
-For the complete application stack, use the [Pickard-Index deployment repository](https://github.com/Candoo/Thornton-Pickard-Deployment):
+For the complete application stack, use the [Thornton Pickard deployment repository](https://github.com/Candoo/Thornton-Pickard-Deployment):
 
 ```bash
 # Clone the deployment repo
