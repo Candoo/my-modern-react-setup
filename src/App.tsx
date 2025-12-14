@@ -72,7 +72,7 @@ function App() {
 
           {data && (
             <p style={{ color: '#4ade80' }}>
-              ✅ API Status: **{data.message || 'Success'}**
+              ✅ Status: {`${data.service} ${data.message}` || 'Success'}
             </p>
           )}
         </CardContent>
